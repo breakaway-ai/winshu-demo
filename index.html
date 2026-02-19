@@ -1,0 +1,3049 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WinShu — Alcance del Proyecto</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0A0C;
+  --surface: #111115;
+  --surface-2: #18181D;
+  --surface-3: #222228;
+  --border: #2A2A32;
+  --text: #E8E6E3;
+  --text-muted: #8A8A96;
+  --accent: #FF6B2C;
+  --accent-glow: rgba(255, 107, 44, 0.15);
+  --green: #34D399;
+  --blue: #60A5FA;
+  --purple: #A78BFA;
+  --pink: #F472B6;
+  --yellow: #FBBF24;
+  --cyan: #22D3EE;
+  --red: #FB7185;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ========== HERO ========== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 40%, rgba(255,107,44,0.06) 0%, transparent 50%),
+              radial-gradient(circle at 70% 60%, rgba(96,165,250,0.04) 0%, transparent 50%);
+  animation: heroFloat 20s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(2%, -2%) rotate(1deg); }
+  66% { transform: translate(-1%, 1%) rotate(-0.5deg); }
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255,107,44,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,107,44,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+}
+
+.hero-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+  animation: fadeInUp 0.8s ease both;
+}
+
+.hero-badge .dot {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.5); }
+}
+
+.hero h1 {
+  position: relative;
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(3.5rem, 8vw, 8rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 0.8s 0.15s ease both;
+}
+
+.hero h1 .accent {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.hero-subtitle {
+  position: relative;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--text-muted);
+  max-width: 560px;
+  margin-bottom: 3rem;
+  font-weight: 300;
+  animation: fadeInUp 0.8s 0.3s ease both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Stats row */
+.hero-stats {
+  position: relative;
+  display: flex;
+  gap: 1px;
+  background: var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  animation: fadeInUp 0.8s 0.45s ease both;
+}
+
+.hero-stat {
+  padding: 1.5rem 2.5rem;
+  background: var(--surface);
+  text-align: center;
+}
+
+.hero-stat:first-child { border-radius: 16px 0 0 16px; }
+.hero-stat:last-child { border-radius: 0 16px 16px 0; }
+
+.hero-stat .number {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2.5rem;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.hero-stat .label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  animation: fadeInUp 0.8s 0.6s ease both;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* ========== NAVIGATION ========== */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,10,12,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+}
+
+.nav-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0.75rem 0;
+}
+
+.nav-inner::-webkit-scrollbar { display: none; }
+
+.nav-btn {
+  flex-shrink: 0;
+  padding: 8px 18px;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  background: none;
+  color: var(--text-muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.nav-btn:hover {
+  color: var(--text);
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+.nav-btn.active {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ========== MAIN ========== */
+.main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem 6rem;
+}
+
+/* ========== OVERVIEW SECTION ========== */
+.overview {
+  padding: 5rem 0;
+}
+
+.overview-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.overview-header h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.overview-header p {
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 300;
+}
+
+/* Actor cards */
+.actors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 5rem;
+}
+
+.actor-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.actor-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--card-accent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.actor-card:hover {
+  border-color: var(--card-accent);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px -20px rgba(0,0,0,0.5);
+}
+
+.actor-card:hover::before { opacity: 1; }
+
+.actor-icon {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.actor-card h3 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.actor-card .count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.actor-card .modules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.module-tag {
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  background: var(--surface-2);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+/* ========== FLOW DIAGRAM ========== */
+.flow-section {
+  margin-bottom: 5rem;
+}
+
+.flow-section h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.flow-section .subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+
+.flow-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 3rem 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+}
+
+.flow-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 12px 20px;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.flow-arrow {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+}
+
+/* ========== SECTIONS ========== */
+.section {
+  padding: 4rem 0;
+  animation: sectionIn 0.6s ease both;
+}
+
+@keyframes sectionIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-icon {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.section-header h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 400;
+}
+
+.section-description {
+  color: var(--text-muted);
+  margin-bottom: 2.5rem;
+  padding-left: 58px;
+  font-weight: 300;
+  max-width: 700px;
+}
+
+/* Module groups */
+.module-group {
+  margin-bottom: 2.5rem;
+}
+
+.module-group-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.module-group-title::before {
+  content: '';
+  width: 16px;
+  height: 1px;
+  background: var(--text-muted);
+}
+
+/* Story cards */
+.stories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 500px) {
+  .stories-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.story-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.story-card:hover {
+  border-color: var(--surface-3);
+  background: var(--surface-2);
+}
+
+.story-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.story-id {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--accent);
+  background: var(--accent-glow);
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.story-effort {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.effort-bar {
+  display: flex;
+  gap: 2px;
+}
+
+.effort-pip {
+  width: 4px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--surface-3);
+}
+
+.effort-pip.filled { background: var(--card-accent, var(--accent)); }
+
+.effort-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.story-text {
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.story-text strong {
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.78rem;
+}
+
+.story-meta {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  background: var(--surface-2);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.meta-chip .icon { font-size: 0.72rem; }
+
+/* ========== EFFORT SUMMARY ========== */
+.effort-summary {
+  padding: 4rem 0;
+}
+
+.effort-summary h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.effort-summary .subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+
+.effort-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.effort-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.75rem;
+}
+
+.effort-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.effort-card-header h3 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.effort-card-header .sp {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.effort-bar-full {
+  height: 6px;
+  background: var(--surface-3);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.effort-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1.5s ease;
+}
+
+.effort-card .detail {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+/* ========== TECH STACK ========== */
+.tech-section {
+  padding: 4rem 0;
+}
+
+.tech-section h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.tech-section .subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.tech-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.tech-item:hover {
+  border-color: var(--surface-3);
+  transform: translateY(-2px);
+}
+
+.tech-item .icon { font-size: 2rem; margin-bottom: 0.75rem; }
+.tech-item h4 { font-size: 0.9rem; margin-bottom: 0.25rem; }
+.tech-item p { font-size: 0.75rem; color: var(--text-muted); font-weight: 300; }
+
+/* ========== FOOTER ========== */
+.footer {
+  text-align: center;
+  padding: 4rem 2rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.footer .logo {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+/* ========== PRIORITY BADGES ========== */
+.priority-high { color: var(--red); }
+.priority-med { color: var(--yellow); }
+.priority-low { color: var(--green); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-stats { flex-direction: column; border-radius: 16px; }
+  .hero-stat:first-child { border-radius: 16px 16px 0 0; }
+  .hero-stat:last-child { border-radius: 0 0 16px 16px; }
+  .section-description { padding-left: 0; }
+  .actors-grid { grid-template-columns: 1fr; }
+  .stories-grid { grid-template-columns: 1fr; }
+  .flow-diagram { flex-direction: column; }
+}
+
+/* ========== ARCHITECTURE DIAGRAMS ========== */
+.arch-section {
+  padding: 5rem 0;
+}
+
+.arch-section > h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.arch-section > .subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 3.5rem;
+  font-weight: 300;
+}
+
+/* System Architecture */
+.arch-diagram {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  margin-bottom: 3rem;
+  overflow-x: auto;
+}
+
+.arch-diagram h3 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.4rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--text);
+}
+
+.arch-layers {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.arch-layer {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  position: relative;
+}
+
+.arch-layer-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.arch-layer-label .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.arch-nodes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.arch-node {
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: transform 0.2s ease;
+}
+
+.arch-node:hover { transform: scale(1.04); }
+.arch-node .n-icon { font-size: 0.9rem; }
+
+.arch-connector {
+  display: flex;
+  justify-content: center;
+  padding: 0.25rem 0;
+}
+
+.arch-connector svg {
+  width: 24px; height: 24px;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+/* Sequence Diagram */
+.seq-diagram {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  margin-bottom: 3rem;
+  overflow-x: auto;
+}
+
+.seq-diagram h3 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.4rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.seq-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  min-width: 700px;
+}
+
+.seq-actors {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 0;
+}
+
+.seq-actor {
+  text-align: center;
+  padding: 12px 8px;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  position: relative;
+}
+
+.seq-actor::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  width: 2px;
+  height: 8px;
+  background: var(--border);
+}
+
+.seq-lifelines {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  position: relative;
+}
+
+.seq-lifeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.seq-lifeline::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: repeating-linear-gradient(to bottom, var(--border) 0, var(--border) 6px, transparent 6px, transparent 12px);
+}
+
+.seq-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.seq-msg {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 10px 0;
+  position: relative;
+}
+
+.seq-arrow {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.seq-arrow::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  z-index: -1;
+}
+
+/* Data model */
+.datamodel-section {
+  padding: 5rem 0;
+}
+
+.datamodel-section > h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.datamodel-section > .subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 3.5rem;
+  font-weight: 300;
+}
+
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+.collection-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.collection-card:hover {
+  border-color: var(--surface-3);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 48px -16px rgba(0,0,0,0.4);
+}
+
+.collection-header {
+  padding: 1.25rem 1.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.collection-header .c-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.collection-header h4 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.collection-header .c-type {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.collection-fields {
+  padding: 0.5rem 1.5rem 1.25rem;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(42,42,50,0.5);
+  font-size: 0.78rem;
+}
+
+.field-row:last-child { border-bottom: none; }
+
+.field-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text);
+}
+
+.field-type {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  padding: 2px 8px;
+  background: var(--surface-2);
+  border-radius: 4px;
+}
+
+.field-key {
+  color: var(--yellow);
+  font-size: 0.6rem;
+  margin-left: 4px;
+}
+
+/* Relations diagram */
+.relations-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  margin-top: 2rem;
+}
+
+.relations-box h3 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.4rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.relations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.75rem;
+}
+
+.relation-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--surface-2);
+  font-size: 0.8rem;
+}
+
+.relation-item .r-from, .relation-item .r-to {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.relation-item .r-arrow {
+  color: var(--accent);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.relation-item .r-label {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  background: var(--surface-3);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* ========== DEMO SECTION ========== */
+.demo-section {
+  padding: 5rem 0;
+}
+
+.demo-section > h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.demo-section > .subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 3.5rem;
+  font-weight: 300;
+}
+
+.demo-container {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .demo-container { grid-template-columns: 1fr; }
+}
+
+/* Phone mockup */
+.phone-frame {
+  width: 300px;
+  margin: 0 auto;
+  background: #000;
+  border-radius: 40px;
+  padding: 12px;
+  box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6), inset 0 0 0 2px #333;
+  position: sticky;
+  top: 100px;
+}
+
+.phone-screen {
+  background: var(--bg);
+  border-radius: 30px;
+  overflow: hidden;
+  height: 580px;
+  position: relative;
+}
+
+.phone-notch {
+  width: 120px;
+  height: 28px;
+  background: #000;
+  border-radius: 0 0 20px 20px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.phone-app {
+  height: calc(100% - 28px);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.phone-app::-webkit-scrollbar { display: none; }
+
+/* App screens */
+.app-header {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+
+.app-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.app-header .app-logo {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.1rem;
+}
+
+.app-header .app-logo span { color: var(--accent); font-style: italic; }
+
+.app-greeting {
+  padding: 20px 20px 8px;
+}
+
+.app-greeting .small {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.app-greeting h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.app-branch-bar {
+  margin: 12px 16px;
+  padding: 10px 14px;
+  background: var(--surface-2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+}
+
+.app-branch-bar .branch-name { font-weight: 600; }
+.app-branch-bar .branch-status { color: var(--green); font-size: 0.7rem; }
+
+/* Category pills */
+.app-categories {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.app-categories::-webkit-scrollbar { display: none; }
+
+.cat-pill {
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+}
+
+.cat-pill.active {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+/* Product cards */
+.app-products {
+  padding: 0 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.product-card:hover { border-color: var(--accent); }
+
+.product-img {
+  width: 64px; height: 64px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.product-info { flex: 1; }
+.product-info h5 { font-size: 0.82rem; font-weight: 600; margin-bottom: 2px; }
+.product-info .desc { font-size: 0.68rem; color: var(--text-muted); margin-bottom: 6px; }
+
+.product-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.product-price {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.product-add {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+
+.product-add:hover { transform: scale(1.1); }
+
+/* Cart bar */
+.app-cart-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 14px 20px;
+  background: var(--accent);
+  color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.app-cart-bar.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.app-cart-bar .cart-count {
+  background: rgba(0,0,0,0.2);
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+}
+
+/* Order tracking screen */
+.tracking-screen { display: none; }
+.tracking-screen.active { display: block; }
+.menu-screen.hidden { display: none; }
+
+.tracking-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tracking-header .back-btn {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.tracking-map {
+  height: 180px;
+  background: var(--surface-2);
+  position: relative;
+  overflow: hidden;
+}
+
+.tracking-map .map-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255,107,44,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,107,44,0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+.tracking-map .map-route {
+  position: absolute;
+  top: 40%; left: 20%;
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--green), var(--accent));
+  border-radius: 1px;
+}
+
+.tracking-map .map-dot-restaurant {
+  position: absolute;
+  top: calc(40% - 12px);
+  left: 20%;
+  width: 24px; height: 24px;
+  background: var(--green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  box-shadow: 0 0 20px rgba(52,211,153,0.4);
+}
+
+.tracking-map .map-dot-rider {
+  position: absolute;
+  top: calc(40% - 14px);
+  width: 28px; height: 28px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  box-shadow: 0 0 20px rgba(255,107,44,0.5);
+  transition: left 2s ease;
+}
+
+.tracking-map .map-dot-home {
+  position: absolute;
+  top: calc(40% - 12px);
+  right: 20%;
+  width: 24px; height: 24px;
+  background: var(--blue);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  box-shadow: 0 0 20px rgba(96,165,250,0.4);
+}
+
+.tracking-info {
+  padding: 20px;
+}
+
+.tracking-eta {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.tracking-eta .time {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2.5rem;
+  color: var(--accent);
+}
+
+.tracking-eta .unit {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* Status steps */
+.status-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0 8px;
+}
+
+.status-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 0;
+  position: relative;
+}
+
+.status-step::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 30px;
+  bottom: -8px;
+  width: 2px;
+  background: var(--border);
+}
+
+.status-step:last-child::before { display: none; }
+
+.status-dot {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.status-step.completed .status-dot {
+  background: var(--green);
+  border-color: var(--green);
+}
+
+.status-step.current .status-dot {
+  background: var(--accent);
+  border-color: var(--accent);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,44,0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(255,107,44,0); }
+}
+
+.status-text h5 {
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.status-text p {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+/* Demo sidebar */
+.demo-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.demo-info-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.demo-info-card h3 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.demo-info-card p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.demo-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.demo-btn {
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.demo-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+}
+
+.demo-btn.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* Live events feed */
+.events-feed {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 300px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.event-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--surface-2);
+  font-size: 0.72rem;
+  animation: eventIn 0.3s ease;
+}
+
+@keyframes eventIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.event-item .e-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.event-item .e-icon { font-size: 0.82rem; }
+.event-item .e-text { color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-badge"><span class="dot"></span> Propuesta Técnica</div>
+  <h1>Win<span class="accent">Shu</span></h1>
+  <p class="hero-subtitle">Plataforma integral de delivery: desde el pedido hasta la puerta del cliente, con seguimiento en tiempo real y control total del negocio.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="number">78</div>
+      <div class="label">User Stories</div>
+    </div>
+    <div class="hero-stat">
+      <div class="number">4</div>
+      <div class="label">Apps / Roles</div>
+    </div>
+    <div class="hero-stat">
+      <div class="number">~340</div>
+      <div class="label">Story Points</div>
+    </div>
+    <div class="hero-stat">
+      <div class="number">22</div>
+      <div class="label">Módulos</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Explorar
+  </div>
+</section>
+
+<!-- ========== STICKY NAV ========== -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <button class="nav-btn active" data-target="overview">Vista General</button>
+    <button class="nav-btn" data-target="flow">Flujo</button>
+    <button class="nav-btn" data-target="repartidor">🛵 Repartidor</button>
+    <button class="nav-btn" data-target="cliente">📱 Cliente</button>
+    <button class="nav-btn" data-target="cocina">👨‍🍳 Cocina</button>
+    <button class="nav-btn" data-target="admin">⚙️ Admin</button>
+    <button class="nav-btn" data-target="effort">Esfuerzo</button>
+    <button class="nav-btn" data-target="tech">Tech Stack</button>
+    <button class="nav-btn" data-target="architecture">🏗️ Arquitectura</button>
+    <button class="nav-btn" data-target="datamodel">🗄️ Data Model</button>
+    <button class="nav-btn" data-target="demo">🚀 Demo</button>
+  </div>
+</nav>
+
+<!-- ========== MAIN ========== -->
+<div class="main">
+
+  <!-- OVERVIEW -->
+  <section id="overview" class="overview">
+    <div class="overview-header">
+      <h2>Cuatro apps, una plataforma</h2>
+      <p>Cada rol del negocio tiene su propia experiencia diseñada a medida, conectadas en tiempo real a través de Firebase.</p>
+    </div>
+    <div class="actors-grid">
+      <!-- Repartidor -->
+      <div class="actor-card" style="--card-accent: var(--accent)" onclick="scrollToSection('repartidor')">
+        <div class="actor-icon" style="background: var(--accent-glow); color: var(--accent);">🛵</div>
+        <h3>Repartidor</h3>
+        <div class="count">21 user stories · 5 módulos</div>
+        <div class="modules">
+          <span class="module-tag">Registro</span>
+          <span class="module-tag">Disponibilidad</span>
+          <span class="module-tag">Entrega</span>
+          <span class="module-tag">Pagos</span>
+        </div>
+      </div>
+      <!-- Cliente -->
+      <div class="actor-card" style="--card-accent: var(--blue)" onclick="scrollToSection('cliente')">
+        <div class="actor-icon" style="background: rgba(96,165,250,0.12); color: var(--blue);">📱</div>
+        <h3>Cliente</h3>
+        <div class="count">28 user stories · 5 módulos</div>
+        <div class="modules">
+          <span class="module-tag">Registro</span>
+          <span class="module-tag">Sucursales</span>
+          <span class="module-tag">Menú</span>
+          <span class="module-tag">Checkout</span>
+          <span class="module-tag">Tracking</span>
+        </div>
+      </div>
+      <!-- Cocina -->
+      <div class="actor-card" style="--card-accent: var(--green)" onclick="scrollToSection('cocina')">
+        <div class="actor-icon" style="background: rgba(52,211,153,0.12); color: var(--green);">👨‍🍳</div>
+        <h3>Cocina / Caja</h3>
+        <div class="count">14 user stories · 4 módulos</div>
+        <div class="modules">
+          <span class="module-tag">Pedidos entrantes</span>
+          <span class="module-tag">Estados</span>
+          <span class="module-tag">Disponibilidad</span>
+          <span class="module-tag">Liquidaciones</span>
+        </div>
+      </div>
+      <!-- Admin -->
+      <div class="actor-card" style="--card-accent: var(--purple)" onclick="scrollToSection('admin')">
+        <div class="actor-icon" style="background: rgba(167,139,250,0.12); color: var(--purple);">⚙️</div>
+        <h3>Administrador</h3>
+        <div class="count">25 user stories · 6 módulos</div>
+        <div class="modules">
+          <span class="module-tag">Menú</span>
+          <span class="module-tag">Sucursales</span>
+          <span class="module-tag">Usuarios</span>
+          <span class="module-tag">Tarifas</span>
+          <span class="module-tag">Reportes</span>
+          <span class="module-tag">Liquidaciones</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLOW DIAGRAM -->
+  <section id="flow" class="flow-section">
+    <h2>Flujo del pedido</h2>
+    <p class="subtitle">El ciclo de vida de cada orden, de principio a fin</p>
+    <div class="flow-diagram">
+      <div class="flow-step" style="background: rgba(96,165,250,0.1); color: var(--blue);">📱 Cliente ordena</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step" style="background: rgba(52,211,153,0.1); color: var(--green);">👨‍🍳 Cocina recibe</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step" style="background: rgba(52,211,153,0.1); color: var(--green);">🔥 Preparando</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step" style="background: rgba(52,211,153,0.1); color: var(--green);">✅ Listo</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step" style="background: rgba(255,107,44,0.1); color: var(--accent);">🛵 Repartidor recoge</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step" style="background: rgba(255,107,44,0.1); color: var(--accent);">📍 En camino</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step" style="background: rgba(251,191,36,0.1); color: var(--yellow);">🎉 Entregado</div>
+    </div>
+  </section>
+
+  <!-- ===================== REPARTIDOR ===================== -->
+  <section id="repartidor" class="section" style="--card-accent: var(--accent)">
+    <div class="section-header">
+      <div class="section-icon" style="background: var(--accent-glow); color: var(--accent);">🛵</div>
+      <h2>App del Repartidor</h2>
+    </div>
+    <p class="section-description">Todo lo que necesita el repartidor: desde registrarse y recibir pedidos hasta entregar y liquidar efectivo.</p>
+
+    <!-- Registro -->
+    <div class="module-group">
+      <div class="module-group-title">Registro y validación</div>
+      <div class="stories-grid">
+        <div class="story-card">
+          <div class="story-top">
+            <span class="story-id">US-R01</span>
+            <div class="story-effort">
+              <div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div>
+              <span class="effort-label">3 SP</span>
+            </div>
+          </div>
+          <p class="story-text">Registro con información personal (nombre, teléfono, email, foto de perfil) y datos fiscales (RFC, régimen fiscal, dirección fiscal).</p>
+          <div class="story-meta">
+            <span class="meta-chip"><span class="icon">🔐</span> Firebase Auth</span>
+            <span class="meta-chip"><span class="icon">📸</span> Storage</span>
+          </div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top">
+            <span class="story-id">US-R02</span>
+            <div class="story-effort">
+              <div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div>
+              <span class="effort-label">5 SP</span>
+            </div>
+          </div>
+          <p class="story-text">Registro de vehículo (tipo, marca, modelo, placas, foto) con imágenes almacenadas en Firebase Storage.</p>
+          <div class="story-meta">
+            <span class="meta-chip"><span class="icon">🚗</span> Vehículo</span>
+            <span class="meta-chip"><span class="icon">📸</span> Storage</span>
+          </div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top">
+            <span class="story-id">US-R03</span>
+            <div class="story-effort">
+              <div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div>
+              <span class="effort-label">3 SP</span>
+            </div>
+          </div>
+          <p class="story-text">Validación de cuenta por administrador antes de recibir pedidos, con notificación push (FCM) al ser aprobado.</p>
+          <div class="story-meta">
+            <span class="meta-chip"><span class="icon">✅</span> Validación</span>
+            <span class="meta-chip"><span class="icon">🔔</span> FCM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disponibilidad -->
+    <div class="module-group">
+      <div class="module-group-title">Disponibilidad y asignación de pedidos</div>
+      <div class="stories-grid">
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R04</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">3 SP</span></div>
+          </div>
+          <p class="story-text">Toggle de disponible / no disponible con estado en Firestore en tiempo real.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">⚡</span> Realtime</span></div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R05</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Aceptar o rechazar pedido en tiempo limitado (30 seg) con countdown en tiempo real usando Firestore listeners.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">⏱️</span> Countdown</span><span class="meta-chip"><span class="icon">⚡</span> Listeners</span></div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R06</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Notificaciones push instantáneas vía FCM cuando hay un nuevo pedido disponible.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">🔔</span> FCM Push</span></div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R07</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Ver detalles del pedido antes de aceptar: dirección, distancia (Google Distance Matrix API), monto en efectivo si aplica.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">🗺️</span> Distance Matrix</span></div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R08</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div></div><span class="effort-label">24 SP</span></div>
+          </div>
+          <p class="story-text">Gestión de múltiples entregas simultáneas si la distancia y tiempos lo permiten, validado por Cloud Functions.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">🧠</span> Cloud Functions</span><span class="meta-chip priority-high"><span class="icon">🔴</span> Complejo</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entrega -->
+    <div class="module-group">
+      <div class="module-group-title">Proceso de entrega</div>
+      <div class="stories-grid">
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R09</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Ubicación del restaurante en mapa con navegación GPS integrada.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">🗺️</span> Maps SDK</span><span class="meta-chip"><span class="icon">📍</span> Navegación</span></div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R10</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">3 SP</span></div>
+          </div>
+          <p class="story-text">Marcar llegada al restaurante → actualiza Firestore → notifica al cliente.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">📍</span> Check-in</span></div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R11</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">3 SP</span></div>
+          </div>
+          <p class="story-text">Marcar recogida del pedido y salida del restaurante con actualización en tiempo real para cliente y cocina.</p>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R12</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Dirección de entrega en mapa con navegación GPS para entregar el pedido.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">🗺️</span> Maps SDK</span></div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R13</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Chat en tiempo real con el cliente usando Firestore como backend.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">💬</span> Chat</span><span class="meta-chip"><span class="icon">⚡</span> Realtime</span></div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R14</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Actualización de ubicación GPS cada X segundos en Firestore para rastreo en tiempo real por el cliente.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">📡</span> GPS Live</span></div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R15</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">3 SP</span></div>
+          </div>
+          <p class="story-text">Marcar pedido como "entregado" con timestamp de Firebase.</p>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R16</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Reportar problemas durante la entrega (cliente no contesta, dirección incorrecta, cancelación) con logs en Firestore.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">⚠️</span> Incidencias</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagos -->
+    <div class="module-group">
+      <div class="module-group-title">Pagos y ganancias</div>
+      <div class="stories-grid">
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R17</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Ver ganancia estimada por entrega (pago por km + propina) calculada por Cloud Function antes de aceptar.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">💰</span> Cálculo</span><span class="meta-chip"><span class="icon">🧠</span> Cloud Fn</span></div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R18</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Ver cuánto debe entregar al restaurante cuando recibe pago en efectivo, calculado automáticamente.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">💵</span> Liquidación</span></div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R19</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Registrar cuándo hizo la liquidación de efectivo al restaurante con timestamp.</p>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R20</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Historial completo de entregas: fecha, sucursal, distancia, pago, propinas y liquidaciones con índices optimizados.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">📊</span> Historial</span></div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-R21</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Resumen de ganancias por período (día, semana, mes) calculado por Cloud Function.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">📈</span> Analytics</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CLIENTE ===================== -->
+  <section id="cliente" class="section" style="--card-accent: var(--blue)">
+    <div class="section-header">
+      <div class="section-icon" style="background: rgba(96,165,250,0.12); color: var(--blue);">📱</div>
+      <h2>App del Cliente</h2>
+    </div>
+    <p class="section-description">Experiencia completa de pedido: desde explorar el menú hasta rastrear al repartidor en tiempo real.</p>
+
+    <!-- Registro -->
+    <div class="module-group">
+      <div class="module-group-title">Registro y perfil</div>
+      <div class="stories-grid">
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C01</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">3 SP</span></div>
+          </div>
+          <p class="story-text">Registro con Firebase Auth: email, Google, Facebook o Apple Sign-In nativo.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">🔐</span> Multi-Auth</span></div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C02</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Guardar múltiples direcciones con nombres personalizados y coordenadas geográficas.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">📍</span> Geocoding</span></div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C03</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Editar perfil (nombre, teléfono, foto a Firebase Storage) en cualquier momento.</p>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C04</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Historial completo de pedidos en Firestore para recordar órdenes anteriores.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">📋</span> Historial</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sucursal -->
+    <div class="module-group">
+      <div class="module-group-title">Sucursal y navegación</div>
+      <div class="stories-grid">
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C05</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Detección de ubicación y sugerencia automática de sucursal más cercana con Google Distance Matrix API.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">📍</span> Geolocation</span><span class="meta-chip"><span class="icon">🧠</span> Cloud Fn</span></div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C06</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div>
+          </div>
+          <p class="story-text">Cambio manual de sucursal con distancia calculada en tiempo real.</p>
+        </div>
+
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C07</span>
+            <div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">3 SP</span></div>
+          </div>
+          <p class="story-text">Ver estado abierto/cerrado según horarios configurados, validado por Cloud Function.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menú -->
+    <div class="module-group">
+      <div class="module-group-title">Menú y productos</div>
+      <div class="stories-grid">
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C08</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div></div>
+          <p class="story-text">Menú organizado por categorías con queries optimizadas de Firestore.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C09</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div></div>
+          <p class="story-text">Fotos de productos desde Firebase Storage con URLs optimizadas.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C10</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div>
+          <p class="story-text">Variantes de tamaño/precio en estructura de documento Firestore.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C11</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div>
+          <p class="story-text">Notas especiales por producto guardadas en carrito de Firestore.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C13</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div></div><span class="effort-label">24 SP</span></div></div>
+          <p class="story-text">Disponibilidad de productos en tiempo real consultando estado en Firestore.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">⚡</span> Realtime</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checkout -->
+    <div class="module-group">
+      <div class="module-group-title">Checkout y pago</div>
+      <div class="stories-grid">
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C14</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div></div><span class="effort-label">24 SP</span></div></div>
+          <p class="story-text">Carrito con subtotal, costo de envío (Cloud Function), propina y total antes de confirmar.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">🧠</span> Cloud Fn</span><span class="meta-chip priority-high"><span class="icon">🔴</span> Complejo</span></div>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C15</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div>
+          <p class="story-text">Modificar cantidades o eliminar productos desde carrito sincronizado.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C16</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div>
+          <p class="story-text">Elegir entre "Entrega a domicilio" o "Recoger en sucursal".</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C17</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div>
+          <p class="story-text">Instrucciones especiales de entrega guardadas en el documento del pedido.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C18</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div>
+          <p class="story-text">Propina para el repartidor con montos sugeridos configurados en Firestore.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C19</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div></div>
+          <p class="story-text">Método de pago: efectivo, tarjeta con Stripe, o terminal física en sucursal.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">💳</span> Stripe</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tracking -->
+    <div class="module-group">
+      <div class="module-group-title">Tracking en tiempo real</div>
+      <div class="stories-grid">
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C21</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div></div><span class="effort-label">24 SP</span></div></div>
+          <p class="story-text">Notificación push vía FCM cuando el pedido fue recibido, disparada por Cloud Function trigger.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">🔔</span> FCM</span><span class="meta-chip"><span class="icon">🧠</span> Trigger</span></div>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C22</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div></div>
+          <p class="story-text">Tiempo estimado de entrega calculado por Cloud Function (distancia + tiempo de preparación).</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C23</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div></div><span class="effort-label">24 SP</span></div></div>
+          <p class="story-text">Estado del pedido en tiempo real con Firestore listeners: Recibido → Preparando → Listo → En camino → Entregado.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">⚡</span> Realtime</span><span class="meta-chip priority-high"><span class="icon">🔴</span> Complejo</span></div>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C24</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div></div><span class="effort-label">24 SP</span></div></div>
+          <p class="story-text">Mapa con ubicación en tiempo real del repartidor actualizándose cada X segundos.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">🗺️</span> Live Map</span><span class="meta-chip priority-high"><span class="icon">🔴</span> Complejo</span></div>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C25</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div></div>
+          <p class="story-text">Notificación push cuando el repartidor esté cerca, con geolocalización vía Cloud Function.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C26</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div></div>
+          <p class="story-text">Chat en tiempo real con el repartidor usando Firestore listeners.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">💬</span> Chat</span></div>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C27</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div></div>
+          <p class="story-text">Notificación push cuando el pedido haya sido entregado.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-C28</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div></div>
+          <p class="story-text">Notificación push cuando el pedido esté listo para recoger en sucursal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COCINA ===================== -->
+  <section id="cocina" class="section" style="--card-accent: var(--green)">
+    <div class="section-header">
+      <div class="section-icon" style="background: rgba(52,211,153,0.12); color: var(--green);">👨‍🍳</div>
+      <h2>App de Cocina / Caja</h2>
+    </div>
+    <p class="section-description">Gestión de pedidos entrantes, estados de preparación, disponibilidad de productos y liquidación con repartidores.</p>
+
+    <div class="module-group">
+      <div class="module-group-title">Pedidos entrantes</div>
+      <div class="stories-grid">
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-K01</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div>
+          <p class="story-text">Notificación sonora con FCM data messages de prioridad alta al llegar nuevo pedido.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">🔊</span> Sonido</span><span class="meta-chip"><span class="icon">🔔</span> FCM</span></div>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-K02</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div>
+          <p class="story-text">Pantalla de pedidos pendientes ordenados por llegada con query Firestore por timestamp.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-K03</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div></div><span class="effort-label">24 SP</span></div></div>
+          <p class="story-text">Impresión automática de comanda vía Cloud Function que envía datos a impresora térmica.</p>
+          <div class="story-meta"><span class="meta-chip"><span class="icon">🖨️</span> Impresora</span><span class="meta-chip priority-high"><span class="icon">🔴</span> Complejo</span></div>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-K04</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div>
+          <p class="story-text">Detalle del pedido: productos, cantidades, variantes, notas especiales, tipo de entrega.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-K05</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div>
+          <p class="story-text">Marcar cada producto individual como "preparado" actualizando array en Firestore.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-group">
+      <div class="module-group-title">Estado del pedido</div>
+      <div class="stories-grid">
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-K06</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">1 SP</span></div></div>
+          <p class="story-text">Cambiar estado a "Preparando" → dispara notificación al cliente vía Cloud Function.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-K07</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">1 SP</span></div></div>
+          <p class="story-text">Marcar pedido como "Listo" → notificación al repartidor.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-K08</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">1 SP</span></div></div>
+          <p class="story-text">Marcar "Entregado al repartidor" con timestamp.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-K09</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">1 SP</span></div></div>
+          <p class="story-text">Marcar pedido "Recoger en sucursal" como "Entregado al cliente" con timestamp.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-group">
+      <div class="module-group-title">Disponibilidad de productos</div>
+      <div class="stories-grid">
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-K10</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">1 SP</span></div></div>
+          <p class="story-text">Desactivar productos agotados → no se pueden ordenar en tiempo real.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-K11</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">1 SP</span></div></div>
+          <p class="story-text">Reactivar productos disponibles con actualización instantánea en Firestore.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-group">
+      <div class="module-group-title">Liquidación con repartidores</div>
+      <div class="stories-grid">
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-K12</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div>
+          <p class="story-text">Lista de repartidores con pedidos en efectivo pendientes de liquidar (query compuesta Firestore).</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-K13</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">1 SP</span></div></div>
+          <p class="story-text">Registrar entrega de efectivo del repartidor → recálculo de saldos vía Cloud Function.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-top"><span class="story-id">US-K14</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">1 SP</span></div></div>
+          <p class="story-text">Desglose de lo que cada repartidor debe entregar, calculado en tiempo real.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ADMIN ===================== -->
+  <section id="admin" class="section" style="--card-accent: var(--purple)">
+    <div class="section-header">
+      <div class="section-icon" style="background: rgba(167,139,250,0.12); color: var(--purple);">⚙️</div>
+      <h2>Panel Administrativo</h2>
+    </div>
+    <p class="section-description">Control total: menú, sucursales, usuarios, tarifas, reportes y liquidaciones desde un solo panel.</p>
+
+    <div class="module-group">
+      <div class="module-group-title">Gestión de menú</div>
+      <div class="stories-grid">
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A01</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div></div><p class="story-text">Crear productos: nombre, descripción, categoría, fotos (Storage), variantes tamaño/precio.</p><div class="story-meta"><span class="meta-chip"><span class="icon">📸</span> Storage</span></div></div>
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A02</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div><p class="story-text">Editar productos con actualización instantánea reflejada en todas las apps en tiempo real.</p></div>
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A03</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div><p class="story-text">Activar/desactivar productos globalmente para todas las sucursales.</p></div>
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A04</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div><p class="story-text">Modificar precios de productos y variantes en tiempo real.</p></div>
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A05</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div><p class="story-text">Crear y gestionar categorías de productos.</p></div>
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A06</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div><p class="story-text">Reordenar productos y categorías con campo order en Firestore.</p></div>
+      </div>
+    </div>
+
+    <div class="module-group">
+      <div class="module-group-title">Gestión de sucursales</div>
+      <div class="stories-grid">
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A07</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div></div><p class="story-text">Crear sucursales: nombre, dirección, GPS (GeoPoint), teléfono, horarios.</p><div class="story-meta"><span class="meta-chip"><span class="icon">📍</span> GeoPoint</span></div></div>
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A08</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div><p class="story-text">Editar información de sucursales existentes.</p></div>
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A09</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">1 SP</span></div></div><p class="story-text">Activar/desactivar sucursales temporalmente.</p></div>
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A10</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">1 SP</span></div></div><p class="story-text">Configurar horarios de servicio por sucursal.</p></div>
+      </div>
+    </div>
+
+    <div class="module-group">
+      <div class="module-group-title">Gestión de usuarios</div>
+      <div class="stories-grid">
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A11</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div><p class="story-text">Lista de repartidores con estatus: pendiente, activo, inactivo.</p></div>
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A12</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div><p class="story-text">Aprobar/rechazar repartidores revisando docs de Storage, con Custom Claims en Auth.</p><div class="story-meta"><span class="meta-chip"><span class="icon">🔐</span> Custom Claims</span></div></div>
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A13</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">1 SP</span></div></div><p class="story-text">Desactivar cuenta de repartidor con Firebase Auth disable.</p></div>
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A14</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div><p class="story-text">Crear cuentas de personal (cajeros, cocineros) con roles vía Custom Claims.</p></div>
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A15</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div><p class="story-text">Asignar sucursal a cada usuario con referencia en Firestore.</p></div>
+      </div>
+    </div>
+
+    <div class="module-group">
+      <div class="module-group-title">Configuración de tarifas</div>
+      <div class="stories-grid">
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A17</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div><p class="story-text">Configurar costo de envío (fijo o por distancia) para clientes.</p></div>
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A18</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div></div><span class="effort-label">8 SP</span></div></div><p class="story-text">Radio máximo de entrega en km desde cada sucursal con GeoPoint.</p><div class="story-meta"><span class="meta-chip"><span class="icon">📍</span> GeoPoint</span></div></div>
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A19</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div><p class="story-text">Montos sugeridos de propina configurables en Firestore.</p></div>
+      </div>
+    </div>
+
+    <div class="module-group">
+      <div class="module-group-title">Liquidaciones</div>
+      <div class="stories-grid">
+        <div class="story-card"><div class="story-top"><span class="story-id">US-A25</span><div class="story-effort"><div class="effort-bar"><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip filled"></div><div class="effort-pip"></div><div class="effort-pip"></div></div><span class="effort-label">5 SP</span></div></div><p class="story-text">Reporte de liquidaciones pendientes calculado por Cloud Function sobre pedidos en efectivo no liquidados.</p><div class="story-meta"><span class="meta-chip"><span class="icon">💵</span> Liquidaciones</span><span class="meta-chip"><span class="icon">🧠</span> Cloud Fn</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EFFORT SUMMARY ========== -->
+  <section id="effort" class="effort-summary">
+    <h2>Resumen de esfuerzo</h2>
+    <p class="subtitle">Story points estimados por módulo principal</p>
+    <div class="effort-grid">
+      <div class="effort-card">
+        <div class="effort-card-header">
+          <h3>🛵 Repartidor</h3>
+          <span class="sp" style="color: var(--accent)">143 SP</span>
+        </div>
+        <div class="effort-bar-full"><div class="effort-bar-fill" style="width: 42%; background: var(--accent);"></div></div>
+        <p class="detail">21 user stories · Registro, disponibilidad, entrega, pagos</p>
+      </div>
+      <div class="effort-card">
+        <div class="effort-card-header">
+          <h3>📱 Cliente</h3>
+          <span class="sp" style="color: var(--blue)">230 SP</span>
+        </div>
+        <div class="effort-bar-full"><div class="effort-bar-fill" style="width: 68%; background: var(--blue);"></div></div>
+        <p class="detail">28 user stories · Registro, menú, checkout, tracking en tiempo real</p>
+      </div>
+      <div class="effort-card">
+        <div class="effort-card-header">
+          <h3>👨‍🍳 Cocina</h3>
+          <span class="sp" style="color: var(--green)">57 SP</span>
+        </div>
+        <div class="effort-bar-full"><div class="effort-bar-fill" style="width: 17%; background: var(--green);"></div></div>
+        <p class="detail">14 user stories · Pedidos, estados, disponibilidad, liquidaciones</p>
+      </div>
+      <div class="effort-card">
+        <div class="effort-card-header">
+          <h3>⚙️ Admin</h3>
+          <span class="sp" style="color: var(--purple)">107 SP</span>
+        </div>
+        <div class="effort-bar-full"><div class="effort-bar-fill" style="width: 32%; background: var(--purple);"></div></div>
+        <p class="detail">25 user stories · Menú, sucursales, usuarios, tarifas, reportes</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TECH STACK ========== -->
+  <section id="tech" class="tech-section">
+    <h2>Stack tecnológico</h2>
+    <p class="subtitle">Tecnologías clave que impulsan WinShu</p>
+    <div class="tech-grid">
+      <div class="tech-item"><div class="icon">🔥</div><h4>Firebase</h4><p>Auth · Firestore · Storage · FCM · Cloud Functions</p></div>
+      <div class="tech-item"><div class="icon">🗺️</div><h4>Google Maps</h4><p>Maps SDK · Distance Matrix · Geocoding</p></div>
+      <div class="tech-item"><div class="icon">💳</div><h4>Stripe</h4><p>Pagos con tarjeta · Customer management</p></div>
+      <div class="tech-item"><div class="icon">⚡</div><h4>Realtime</h4><p>Firestore listeners · GPS tracking · Chat</p></div>
+      <div class="tech-item"><div class="icon">🔔</div><h4>Push Notifications</h4><p>FCM · Data messages · Triggers automáticos</p></div>
+      <div class="tech-item"><div class="icon">🖨️</div><h4>Hardware</h4><p>Impresora térmica · Terminal física</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== ARCHITECTURE ===================== -->
+  <section id="architecture" class="arch-section">
+    <h2>Arquitectura del sistema</h2>
+    <p class="subtitle">Cómo se conectan las piezas — desde las apps hasta los servicios backend</p>
+
+    <!-- System Layers -->
+    <div class="arch-diagram">
+      <h3>Vista de capas</h3>
+      <div class="arch-layers">
+        <!-- Client Layer -->
+        <div class="arch-layer" style="border-color: rgba(96,165,250,0.3); background: rgba(96,165,250,0.03);">
+          <div class="arch-layer-label"><div class="dot" style="background: var(--blue);"></div> Capa de presentación — Apps nativas</div>
+          <div class="arch-nodes">
+            <div class="arch-node" style="background: rgba(96,165,250,0.12); color: var(--blue);"><span class="n-icon">📱</span> App Cliente (iOS/Android)</div>
+            <div class="arch-node" style="background: rgba(255,107,44,0.12); color: var(--accent);"><span class="n-icon">🛵</span> App Repartidor (iOS/Android)</div>
+            <div class="arch-node" style="background: rgba(52,211,153,0.12); color: var(--green);"><span class="n-icon">🖥️</span> App Cocina (Tablet)</div>
+            <div class="arch-node" style="background: rgba(167,139,250,0.12); color: var(--purple);"><span class="n-icon">💻</span> Panel Admin (Web)</div>
+          </div>
+        </div>
+
+        <div class="arch-connector">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </div>
+
+        <!-- Firebase Layer -->
+        <div class="arch-layer" style="border-color: rgba(251,191,36,0.3); background: rgba(251,191,36,0.03);">
+          <div class="arch-layer-label"><div class="dot" style="background: var(--yellow);"></div> Capa de servicios — Firebase</div>
+          <div class="arch-nodes">
+            <div class="arch-node" style="background: rgba(251,191,36,0.12); color: var(--yellow);"><span class="n-icon">🔐</span> Authentication</div>
+            <div class="arch-node" style="background: rgba(251,191,36,0.12); color: var(--yellow);"><span class="n-icon">🗄️</span> Firestore DB</div>
+            <div class="arch-node" style="background: rgba(251,191,36,0.12); color: var(--yellow);"><span class="n-icon">📸</span> Cloud Storage</div>
+            <div class="arch-node" style="background: rgba(251,191,36,0.12); color: var(--yellow);"><span class="n-icon">🔔</span> Cloud Messaging</div>
+            <div class="arch-node" style="background: rgba(251,191,36,0.12); color: var(--yellow);"><span class="n-icon">⚡</span> Cloud Functions</div>
+          </div>
+        </div>
+
+        <div class="arch-connector">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </div>
+
+        <!-- Logic Layer -->
+        <div class="arch-layer" style="border-color: rgba(255,107,44,0.3); background: rgba(255,107,44,0.03);">
+          <div class="arch-layer-label"><div class="dot" style="background: var(--accent);"></div> Cloud Functions — Lógica de negocio</div>
+          <div class="arch-nodes">
+            <div class="arch-node" style="background: rgba(255,107,44,0.1); color: var(--accent);"><span class="n-icon">📦</span> Asignación de pedidos</div>
+            <div class="arch-node" style="background: rgba(255,107,44,0.1); color: var(--accent);"><span class="n-icon">💰</span> Cálculo de tarifas</div>
+            <div class="arch-node" style="background: rgba(255,107,44,0.1); color: var(--accent);"><span class="n-icon">📍</span> Geolocalización</div>
+            <div class="arch-node" style="background: rgba(255,107,44,0.1); color: var(--accent);"><span class="n-icon">🔔</span> Notificaciones</div>
+            <div class="arch-node" style="background: rgba(255,107,44,0.1); color: var(--accent);"><span class="n-icon">💵</span> Liquidaciones</div>
+            <div class="arch-node" style="background: rgba(255,107,44,0.1); color: var(--accent);"><span class="n-icon">📊</span> Reportes</div>
+          </div>
+        </div>
+
+        <div class="arch-connector">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </div>
+
+        <!-- External Layer -->
+        <div class="arch-layer" style="border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.03);">
+          <div class="arch-layer-label"><div class="dot" style="background: var(--purple);"></div> Servicios externos</div>
+          <div class="arch-nodes">
+            <div class="arch-node" style="background: rgba(167,139,250,0.1); color: var(--purple);"><span class="n-icon">🗺️</span> Google Maps Platform</div>
+            <div class="arch-node" style="background: rgba(167,139,250,0.1); color: var(--purple);"><span class="n-icon">💳</span> Stripe Payments</div>
+            <div class="arch-node" style="background: rgba(167,139,250,0.1); color: var(--purple);"><span class="n-icon">🖨️</span> Cloud Print / API Local</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sequence Diagram -->
+    <div class="seq-diagram">
+      <h3>Flujo de un pedido — Secuencia</h3>
+      <div class="seq-container">
+        <div class="seq-actors">
+          <div class="seq-actor" style="background: rgba(96,165,250,0.12); color: var(--blue);">📱 Cliente</div>
+          <div class="seq-actor" style="background: rgba(251,191,36,0.12); color: var(--yellow);">🔥 Firebase</div>
+          <div class="seq-actor" style="background: rgba(52,211,153,0.12); color: var(--green);">👨‍🍳 Cocina</div>
+          <div class="seq-actor" style="background: rgba(255,107,44,0.12); color: var(--accent);">🛵 Repartidor</div>
+        </div>
+        <div class="seq-messages" style="margin-top: 1rem;">
+          <div class="seq-msg-row" style="display: flex; align-items: center; gap: 8px; padding: 8px 0;">
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.7rem; padding: 4px 10px; border-radius: 6px; background: rgba(96,165,250,0.15); color: var(--blue);">Confirma pedido</span></div>
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.6rem; color: var(--text-muted);">→ write order doc</span></div>
+            <div style="flex: 0 0 25%;"></div>
+            <div style="flex: 0 0 25%;"></div>
+          </div>
+          <div class="seq-msg-row" style="display: flex; align-items: center; gap: 8px; padding: 8px 0;">
+            <div style="flex: 0 0 25%;"></div>
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.7rem; padding: 4px 10px; border-radius: 6px; background: rgba(251,191,36,0.15); color: var(--yellow);">Cloud Function trigger</span></div>
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.6rem; color: var(--text-muted);">→ FCM push</span></div>
+            <div style="flex: 0 0 25%;"></div>
+          </div>
+          <div class="seq-msg-row" style="display: flex; align-items: center; gap: 8px; padding: 8px 0;">
+            <div style="flex: 0 0 25%;"></div>
+            <div style="flex: 0 0 25%;"></div>
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.7rem; padding: 4px 10px; border-radius: 6px; background: rgba(52,211,153,0.15); color: var(--green);">Acepta → Preparando</span></div>
+            <div style="flex: 0 0 25%;"></div>
+          </div>
+          <div class="seq-msg-row" style="display: flex; align-items: center; gap: 8px; padding: 8px 0;">
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.6rem; color: var(--text-muted);">← listener update</span></div>
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.7rem; padding: 4px 10px; border-radius: 6px; background: rgba(251,191,36,0.15); color: var(--yellow);">Realtime sync</span></div>
+            <div style="flex: 0 0 25%;"></div>
+            <div style="flex: 0 0 25%;"></div>
+          </div>
+          <div class="seq-msg-row" style="display: flex; align-items: center; gap: 8px; padding: 8px 0;">
+            <div style="flex: 0 0 25%;"></div>
+            <div style="flex: 0 0 25%;"></div>
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.7rem; padding: 4px 10px; border-radius: 6px; background: rgba(52,211,153,0.15); color: var(--green);">Marca "Listo"</span></div>
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.6rem; color: var(--text-muted);">→ FCM push</span></div>
+          </div>
+          <div class="seq-msg-row" style="display: flex; align-items: center; gap: 8px; padding: 8px 0;">
+            <div style="flex: 0 0 25%;"></div>
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.7rem; padding: 4px 10px; border-radius: 6px; background: rgba(251,191,36,0.15); color: var(--yellow);">Asigna repartidor</span></div>
+            <div style="flex: 0 0 25%;"></div>
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.7rem; padding: 4px 10px; border-radius: 6px; background: rgba(255,107,44,0.15); color: var(--accent);">Acepta pedido</span></div>
+          </div>
+          <div class="seq-msg-row" style="display: flex; align-items: center; gap: 8px; padding: 8px 0;">
+            <div style="flex: 0 0 25%;"></div>
+            <div style="flex: 0 0 25%;"></div>
+            <div style="flex: 0 0 25%;"></div>
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.7rem; padding: 4px 10px; border-radius: 6px; background: rgba(255,107,44,0.15); color: var(--accent);">Recoge → En camino</span></div>
+          </div>
+          <div class="seq-msg-row" style="display: flex; align-items: center; gap: 8px; padding: 8px 0;">
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.7rem; padding: 4px 10px; border-radius: 6px; background: rgba(96,165,250,0.15); color: var(--blue);">Ve GPS en vivo 📍</span></div>
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.6rem; color: var(--text-muted);">← location updates</span></div>
+            <div style="flex: 0 0 25%;"></div>
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.6rem; color: var(--text-muted);">write GPS cada Xs →</span></div>
+          </div>
+          <div class="seq-msg-row" style="display: flex; align-items: center; gap: 8px; padding: 8px 0;">
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.7rem; padding: 4px 10px; border-radius: 6px; background: rgba(52,211,153,0.15); color: var(--green);">🎉 Entregado</span></div>
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.6rem; color: var(--text-muted);">← FCM push</span></div>
+            <div style="flex: 0 0 25%;"></div>
+            <div style="flex: 0 0 25%; text-align: center;"><span style="font-size: 0.7rem; padding: 4px 10px; border-radius: 6px; background: rgba(255,107,44,0.15); color: var(--accent);">Marca entregado ✅</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Realtime Event Flow -->
+    <div class="arch-diagram">
+      <h3>Comunicación en tiempo real</h3>
+      <div style="max-width: 800px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 1rem; align-items: center;">
+          <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px; padding: 16px; text-align: center;">
+            <div style="font-size: 1.5rem; margin-bottom: 6px;">✍️</div>
+            <div style="font-size: 0.78rem; font-weight: 600;">Write</div>
+            <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 4px;">App escribe en Firestore</div>
+          </div>
+          <div style="color: var(--accent); font-size: 1.2rem;">→</div>
+          <div style="background: var(--surface-2); border: 1px solid rgba(251,191,36,0.3); border-radius: 14px; padding: 16px; text-align: center;">
+            <div style="font-size: 1.5rem; margin-bottom: 6px;">⚡</div>
+            <div style="font-size: 0.78rem; font-weight: 600; color: var(--yellow);">Cloud Function Trigger</div>
+            <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 4px;">Procesa, valida, calcula</div>
+          </div>
+          <div style="color: var(--accent); font-size: 1.2rem;">→</div>
+          <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px; padding: 16px; text-align: center;">
+            <div style="font-size: 1.5rem; margin-bottom: 6px;">🔔</div>
+            <div style="font-size: 0.78rem; font-weight: 600;">Notify</div>
+            <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 4px;">FCM push + Listener update</div>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 1.5rem;">
+          <div style="display: inline-flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center;">
+            <div style="font-size: 0.72rem; color: var(--text-muted);"><span style="color: var(--green);">●</span> Latencia &lt; 200ms para listeners</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted);"><span style="color: var(--blue);">●</span> FCM push &lt; 1s</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted);"><span style="color: var(--accent);">●</span> GPS update cada 5-10s</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DATA MODEL ===================== -->
+  <section id="datamodel" class="datamodel-section">
+    <h2>Modelo de datos</h2>
+    <p class="subtitle">Estructura de colecciones en Firestore — el corazón de WinShu</p>
+
+    <div class="collections-grid">
+      <!-- Users -->
+      <div class="collection-card">
+        <div class="collection-header">
+          <div class="c-icon" style="background: rgba(96,165,250,0.12); color: var(--blue);">👤</div>
+          <div><h4>users</h4><div class="c-type">Collection</div></div>
+        </div>
+        <div class="collection-fields">
+          <div class="field-row"><span class="field-name">uid <span class="field-key">PK</span></span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">name</span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">email</span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">phone</span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">role</span><span class="field-type">enum</span></div>
+          <div class="field-row"><span class="field-name">photoURL</span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">branchId</span><span class="field-type">ref</span></div>
+          <div class="field-row"><span class="field-name">status</span><span class="field-type">enum</span></div>
+          <div class="field-row"><span class="field-name">addresses[]</span><span class="field-type">subcollection</span></div>
+        </div>
+      </div>
+
+      <!-- Drivers -->
+      <div class="collection-card">
+        <div class="collection-header">
+          <div class="c-icon" style="background: rgba(255,107,44,0.12); color: var(--accent);">🛵</div>
+          <div><h4>drivers</h4><div class="c-type">Collection</div></div>
+        </div>
+        <div class="collection-fields">
+          <div class="field-row"><span class="field-name">uid <span class="field-key">PK</span></span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">available</span><span class="field-type">boolean</span></div>
+          <div class="field-row"><span class="field-name">currentLocation</span><span class="field-type">GeoPoint</span></div>
+          <div class="field-row"><span class="field-name">vehicle</span><span class="field-type">map</span></div>
+          <div class="field-row"><span class="field-name">rfc</span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">taxRegime</span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">validated</span><span class="field-type">boolean</span></div>
+          <div class="field-row"><span class="field-name">activeOrders[]</span><span class="field-type">ref[]</span></div>
+        </div>
+      </div>
+
+      <!-- Orders -->
+      <div class="collection-card">
+        <div class="collection-header">
+          <div class="c-icon" style="background: rgba(52,211,153,0.12); color: var(--green);">📦</div>
+          <div><h4>orders</h4><div class="c-type">Collection</div></div>
+        </div>
+        <div class="collection-fields">
+          <div class="field-row"><span class="field-name">orderId <span class="field-key">PK</span></span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">customerId</span><span class="field-type">ref</span></div>
+          <div class="field-row"><span class="field-name">driverId</span><span class="field-type">ref</span></div>
+          <div class="field-row"><span class="field-name">branchId</span><span class="field-type">ref</span></div>
+          <div class="field-row"><span class="field-name">status</span><span class="field-type">enum</span></div>
+          <div class="field-row"><span class="field-name">items[]</span><span class="field-type">array&lt;map&gt;</span></div>
+          <div class="field-row"><span class="field-name">deliveryAddress</span><span class="field-type">GeoPoint</span></div>
+          <div class="field-row"><span class="field-name">type</span><span class="field-type">enum</span></div>
+          <div class="field-row"><span class="field-name">paymentMethod</span><span class="field-type">enum</span></div>
+          <div class="field-row"><span class="field-name">subtotal</span><span class="field-type">number</span></div>
+          <div class="field-row"><span class="field-name">deliveryFee</span><span class="field-type">number</span></div>
+          <div class="field-row"><span class="field-name">tip</span><span class="field-type">number</span></div>
+          <div class="field-row"><span class="field-name">total</span><span class="field-type">number</span></div>
+          <div class="field-row"><span class="field-name">timestamps</span><span class="field-type">map</span></div>
+          <div class="field-row"><span class="field-name">cashSettled</span><span class="field-type">boolean</span></div>
+        </div>
+      </div>
+
+      <!-- Branches -->
+      <div class="collection-card">
+        <div class="collection-header">
+          <div class="c-icon" style="background: rgba(167,139,250,0.12); color: var(--purple);">🏪</div>
+          <div><h4>branches</h4><div class="c-type">Collection</div></div>
+        </div>
+        <div class="collection-fields">
+          <div class="field-row"><span class="field-name">branchId <span class="field-key">PK</span></span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">name</span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">address</span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">location</span><span class="field-type">GeoPoint</span></div>
+          <div class="field-row"><span class="field-name">phone</span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">schedule</span><span class="field-type">map</span></div>
+          <div class="field-row"><span class="field-name">active</span><span class="field-type">boolean</span></div>
+          <div class="field-row"><span class="field-name">maxRadius</span><span class="field-type">number</span></div>
+        </div>
+      </div>
+
+      <!-- Products -->
+      <div class="collection-card">
+        <div class="collection-header">
+          <div class="c-icon" style="background: rgba(251,191,36,0.12); color: var(--yellow);">🍔</div>
+          <div><h4>products</h4><div class="c-type">Collection</div></div>
+        </div>
+        <div class="collection-fields">
+          <div class="field-row"><span class="field-name">productId <span class="field-key">PK</span></span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">name</span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">description</span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">categoryId</span><span class="field-type">ref</span></div>
+          <div class="field-row"><span class="field-name">photoURL</span><span class="field-type">string</span></div>
+          <div class="field-row"><span class="field-name">variants[]</span><span class="field-type">array&lt;map&gt;</span></div>
+          <div class="field-row"><span class="field-name">available</span><span class="field-type">boolean</span></div>
+          <div class="field-row"><span class="field-name">order</span><span class="field-type">number</span></div>
+        </div>
+      </div>
+
+      <!-- Config -->
+      <div class="collection-card">
+        <div class="collection-header">
+          <div class="c-icon" style="background: rgba(244,114,182,0.12); color: var(--pink);">⚙️</div>
+          <div><h4>config</h4><div class="c-type">Document</div></div>
+        </div>
+        <div class="collection-fields">
+          <div class="field-row"><span class="field-name">deliveryFeeType</span><span class="field-type">enum</span></div>
+          <div class="field-row"><span class="field-name">deliveryFeeAmount</span><span class="field-type">number</span></div>
+          <div class="field-row"><span class="field-name">pricePerKm</span><span class="field-type">number</span></div>
+          <div class="field-row"><span class="field-name">tipSuggestions[]</span><span class="field-type">array</span></div>
+          <div class="field-row"><span class="field-name">orderTimeout</span><span class="field-type">number</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Relations -->
+    <div class="relations-box">
+      <h3>Relaciones entre colecciones</h3>
+      <div class="relations-grid">
+        <div class="relation-item">
+          <span class="r-from" style="color: var(--green);">orders</span>
+          <span class="r-arrow">→</span>
+          <span class="r-to" style="color: var(--blue);">users</span>
+          <span class="r-label">customerId</span>
+        </div>
+        <div class="relation-item">
+          <span class="r-from" style="color: var(--green);">orders</span>
+          <span class="r-arrow">→</span>
+          <span class="r-to" style="color: var(--accent);">drivers</span>
+          <span class="r-label">driverId</span>
+        </div>
+        <div class="relation-item">
+          <span class="r-from" style="color: var(--green);">orders</span>
+          <span class="r-arrow">→</span>
+          <span class="r-to" style="color: var(--purple);">branches</span>
+          <span class="r-label">branchId</span>
+        </div>
+        <div class="relation-item">
+          <span class="r-from" style="color: var(--green);">orders.items</span>
+          <span class="r-arrow">→</span>
+          <span class="r-to" style="color: var(--yellow);">products</span>
+          <span class="r-label">productId</span>
+        </div>
+        <div class="relation-item">
+          <span class="r-from" style="color: var(--blue);">users</span>
+          <span class="r-arrow">→</span>
+          <span class="r-to" style="color: var(--purple);">branches</span>
+          <span class="r-label">branchId (staff)</span>
+        </div>
+        <div class="relation-item">
+          <span class="r-from" style="color: var(--yellow);">products</span>
+          <span class="r-arrow">→</span>
+          <span class="r-to" style="color: var(--pink);">categories</span>
+          <span class="r-label">categoryId</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DEMO ===================== -->
+  <section id="demo" class="demo-section">
+    <h2>Demo interactiva</h2>
+    <p class="subtitle">Explora cómo se verá la experiencia del cliente — menú, carrito y tracking en vivo</p>
+
+    <div class="demo-container">
+      <!-- Phone -->
+      <div>
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-notch"></div>
+
+            <!-- MENU SCREEN -->
+            <div class="phone-app menu-screen" id="menuScreen">
+              <div class="app-header">
+                <div class="app-logo">Win<span>Shu</span></div>
+                <div style="font-size: 0.72rem; color: var(--text-muted);">🔔</div>
+              </div>
+              <div class="app-greeting">
+                <div class="small">Hola, Carlos 👋</div>
+                <h4>¿Qué vas a pedir hoy?</h4>
+              </div>
+              <div class="app-branch-bar">
+                <div>
+                  <div class="branch-name">📍 Sucursal Centro</div>
+                </div>
+                <div class="branch-status">● Abierto</div>
+              </div>
+              <div class="app-categories">
+                <div class="cat-pill active" onclick="filterCategory('all', this)">Todo</div>
+                <div class="cat-pill" onclick="filterCategory('burgers', this)">🍔 Burgers</div>
+                <div class="cat-pill" onclick="filterCategory('tacos', this)">🌮 Tacos</div>
+                <div class="cat-pill" onclick="filterCategory('drinks', this)">🥤 Bebidas</div>
+                <div class="cat-pill" onclick="filterCategory('desserts', this)">🍰 Postres</div>
+              </div>
+              <div class="app-products" id="productsContainer">
+                <!-- Products rendered by JS -->
+              </div>
+            </div>
+
+            <!-- TRACKING SCREEN -->
+            <div class="tracking-screen" id="trackingScreen">
+              <div class="tracking-header">
+                <button class="back-btn" onclick="showMenu()">←</button>
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 600;">Pedido #WS-2847</div>
+                  <div style="font-size: 0.65rem; color: var(--text-muted);">En proceso</div>
+                </div>
+              </div>
+              <div class="tracking-map">
+                <div class="map-grid"></div>
+                <div class="map-route"></div>
+                <div class="map-dot-restaurant">🏪</div>
+                <div class="map-dot-rider" id="riderDot" style="left: 35%;">🛵</div>
+                <div class="map-dot-home">🏠</div>
+              </div>
+              <div class="tracking-info">
+                <div class="tracking-eta">
+                  <div class="time" id="etaTime">18</div>
+                  <div class="unit">minutos estimados</div>
+                </div>
+                <div class="status-steps" id="statusSteps">
+                  <div class="status-step completed">
+                    <div class="status-dot">✓</div>
+                    <div class="status-text"><h5>Pedido recibido</h5><p>12:34 PM</p></div>
+                  </div>
+                  <div class="status-step completed">
+                    <div class="status-dot">✓</div>
+                    <div class="status-text"><h5>Preparando tu pedido</h5><p>12:35 PM — Cocina comenzó</p></div>
+                  </div>
+                  <div class="status-step current" id="currentStep">
+                    <div class="status-dot">🛵</div>
+                    <div class="status-text"><h5>En camino</h5><p>Repartidor a 2.3 km</p></div>
+                  </div>
+                  <div class="status-step">
+                    <div class="status-dot"></div>
+                    <div class="status-text"><h5>Entregado</h5><p>Esperando...</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cart bar -->
+            <div class="app-cart-bar" id="cartBar" onclick="showTracking()">
+              <span>Ver pedido</span>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span id="cartTotal">$0</span>
+                <span class="cart-count" id="cartCount">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="demo-sidebar">
+        <div class="demo-info-card">
+          <h3>🎮 Prueba la experiencia</h3>
+          <p>Esta demo simula la app del cliente. Agrega productos al carrito y presiona "Ver pedido" para ver el tracking en tiempo real con la animación del repartidor moviéndose en el mapa.</p>
+          <div class="demo-actions">
+            <button class="demo-btn active" onclick="showMenu(); setDemoMode(this);">📱 Ver menú</button>
+            <button class="demo-btn" onclick="showTracking(); setDemoMode(this);">📍 Ver tracking en vivo</button>
+            <button class="demo-btn" onclick="resetDemo(); setDemoMode(this);">🔄 Reiniciar demo</button>
+          </div>
+        </div>
+
+        <div class="demo-info-card">
+          <h3>⚡ Eventos en tiempo real</h3>
+          <p>Así es como Firestore sincroniza los datos entre todas las apps simultáneamente.</p>
+          <div class="events-feed" id="eventsFeed">
+            <div class="event-item">
+              <span class="e-time">12:34:01</span>
+              <span class="e-icon">📱</span>
+              <span class="e-text">Cliente abrió la app</span>
+            </div>
+            <div class="event-item">
+              <span class="e-time">12:34:02</span>
+              <span class="e-icon">🔥</span>
+              <span class="e-text">Firestore: listener menú activo</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-info-card">
+          <h3>📐 Tecnologías en acción</h3>
+          <p>Cada interacción que ves aquí refleja funcionalidad real del sistema:</p>
+          <div style="margin-top: 0.75rem; display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
+              <span style="color: var(--yellow);">▸</span> Menú cargado desde <strong style="color: var(--text);">Firestore</strong>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
+              <span style="color: var(--yellow);">▸</span> Categorías filtradas por <strong style="color: var(--text);">Queries optimizadas</strong>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
+              <span style="color: var(--yellow);">▸</span> Carrito sincronizado en <strong style="color: var(--text);">Realtime</strong>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
+              <span style="color: var(--yellow);">▸</span> GPS del repartidor via <strong style="color: var(--text);">GeoPoint</strong>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
+              <span style="color: var(--yellow);">▸</span> Notificaciones via <strong style="color: var(--text);">FCM triggers</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="logo">Win<span style="color: var(--accent); font-style: italic;">Shu</span></div>
+  <p>Propuesta técnica · Breakaway · 2025</p>
+</footer>
+
+<script>
+// Smooth scroll navigation
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.target;
+    const el = document.getElementById(target);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.target === id);
+  });
+}
+
+// Intersection observer for nav highlighting
+const sections = document.querySelectorAll('section[id]');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.target === entry.target.id);
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -60% 0px' });
+
+sections.forEach(s => observer.observe(s));
+
+// Card animations
+const cardObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.story-card, .actor-card, .tech-item, .collection-card, .relation-item, .arch-node').forEach(card => {
+  card.style.opacity = '0';
+  card.style.transform = 'translateY(15px)';
+  card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+  cardObserver.observe(card);
+});
+
+// ========== DEMO ==========
+const products = [
+  { id:1, name:'California Roll', desc:'Aguacate, pepino, surimi · PF: Ajonjolí', price:60, emoji:'🍣', cat:'clasicos' },
+  { id:2, name:'Cruji Roll', desc:'Empanizado · Aguacate, pepino, surimi', price:60, emoji:'🍣', cat:'clasicos' },
+  { id:3, name:'Nori Roll', desc:'Alga · Aguacate, pepino, surimi', price:60, emoji:'🍣', cat:'clasicos' },
+  { id:4, name:'Ké Roll', desc:'Queso manchego gratinado y chile picado', price:99, emoji:'🔥', cat:'especiales' },
+  { id:5, name:'Nasareno Roll', desc:'Kakiague · Philadelphia, queso manchego empanizado', price:105, emoji:'⭐', cat:'especiales' },
+  { id:6, name:'Marino Roll', desc:'Aguacate · Philadelphia, pepino, camarón y surimi', price:117, emoji:'🌊', cat:'especiales' },
+  { id:7, name:'Toci Roll', desc:'Manchego gratinado, tocino · Pollo, aguacate, arrachera', price:117, emoji:'🥓', cat:'especiales' },
+  { id:8, name:'Strawberry Roll', desc:'Philadelphia y fresa · Salmón, pepino, kakiague', price:99, emoji:'🍓', cat:'especiales' },
+  { id:9, name:'Brocheta de Queso', desc:'1 pieza de kushiague clásico', price:27, emoji:'🍢', cat:'kushiagues' },
+  { id:10, name:'Brocheta de Camarón', desc:'Con philadelphia · 1 pieza', price:33, emoji:'🍢', cat:'kushiagues' },
+  { id:11, name:'Brocheta de Plátano', desc:'Con queso · 1 pieza', price:25, emoji:'🍢', cat:'kushiagues' },
+  { id:12, name:'Philadelphia Extra', desc:'2 oz de queso philadelphia', price:18, emoji:'🥢', cat:'extras' },
+  { id:13, name:'Teriyaki Extra', desc:'2 oz de salsa teriyaki', price:15, emoji:'🥢', cat:'extras' },
+  { id:14, name:'Soya con Chile', desc:'2 oz de soya con chile', price:10, emoji:'🥢', cat:'extras' },
+];
+
+let cart = {};
+let currentCategory = 'all';
+let trackingInterval = null;
+
+function renderProducts() {
+  const container = document.getElementById('productsContainer');
+  const filtered = currentCategory === 'all' ? products : products.filter(p => p.cat === currentCategory);
+  container.innerHTML = filtered.map(p => `
+    <div class="product-card">
+      <div class="product-img" style="background: var(--surface-2);">${p.emoji}</div>
+      <div class="product-info">
+        <h5>${p.name}</h5>
+        <div class="desc">${p.desc}</div>
+        <div class="product-bottom">
+          <span class="product-price">$${p.price}</span>
+          <button class="product-add" onclick="addToCart(${p.id}, event)">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterCategory(cat, el) {
+  currentCategory = cat;
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  renderProducts();
+  addEvent('🔍', 'Filtro: ' + (cat === 'all' ? 'Todos' : cat));
+}
+
+function addToCart(id, e) {
+  e.stopPropagation();
+  cart[id] = (cart[id] || 0) + 1;
+  updateCartBar();
+  const product = products.find(p => p.id === id);
+  addEvent('🛒', '+1 ' + product.name);
+  const btn = e.target;
+  btn.style.transform = 'scale(1.3)';
+  setTimeout(() => btn.style.transform = '', 150);
+}
+
+function updateCartBar() {
+  const count = Object.values(cart).reduce((a, b) => a + b, 0);
+  const total = Object.entries(cart).reduce((sum, [id, qty]) => {
+    const p = products.find(p => p.id === parseInt(id));
+    return sum + (p ? p.price * qty : 0);
+  }, 0);
+  document.getElementById('cartCount').textContent = count;
+  document.getElementById('cartTotal').textContent = '$' + total;
+  document.getElementById('cartBar').classList.toggle('visible', count > 0);
+}
+
+function showTracking() {
+  document.getElementById('menuScreen').classList.add('hidden');
+  document.getElementById('trackingScreen').classList.add('active');
+  document.getElementById('cartBar').style.display = 'none';
+  addEvent('📦', 'Pedido confirmado → Cloud Function trigger');
+  addEvent('🔔', 'FCM → Notificación a cocina');
+  startRiderAnimation();
+}
+
+function showMenu() {
+  document.getElementById('menuScreen').classList.remove('hidden');
+  document.getElementById('trackingScreen').classList.remove('active');
+  document.getElementById('cartBar').style.display = '';
+  if (trackingInterval) clearInterval(trackingInterval);
+}
+
+function startRiderAnimation() {
+  const rider = document.getElementById('riderDot');
+  const etaEl = document.getElementById('etaTime');
+  let position = 35, eta = 18;
+  if (trackingInterval) clearInterval(trackingInterval);
+  rider.style.left = '35%';
+  trackingInterval = setInterval(() => {
+    position += 1.5;
+    eta = Math.max(0, eta - 1);
+    rider.style.left = Math.min(position, 72) + '%';
+    etaEl.textContent = eta;
+    if (position >= 45 && position < 47) addEvent('📡', 'GPS update: ' + (position/10).toFixed(1) + 'km');
+    if (position >= 55 && position < 57) addEvent('🔔', 'FCM → Repartidor cerca');
+    if (position >= 72) {
+      clearInterval(trackingInterval);
+      etaEl.textContent = '0';
+      addEvent('✅', '¡Pedido entregado! 🎉');
+      const steps = document.querySelectorAll('.status-step');
+      steps[2].classList.remove('current'); steps[2].classList.add('completed');
+      steps[2].querySelector('.status-dot').textContent = '✓';
+      steps[3].classList.add('completed');
+      steps[3].querySelector('.status-dot').textContent = '✓';
+      steps[3].querySelector('p').textContent = '12:52 PM';
+    }
+  }, 1500);
+}
+
+function resetDemo() {
+  cart = {};
+  updateCartBar();
+  showMenu();
+  currentCategory = 'all';
+  document.querySelectorAll('.cat-pill').forEach((p, i) => p.classList.toggle('active', i === 0));
+  renderProducts();
+  document.getElementById('riderDot').style.left = '35%';
+  document.getElementById('etaTime').textContent = '18';
+  const steps = document.querySelectorAll('.status-step');
+  steps[2].classList.add('current'); steps[2].classList.remove('completed');
+  steps[2].querySelector('.status-dot').textContent = '🛵';
+  steps[3].classList.remove('completed');
+  steps[3].querySelector('.status-dot').textContent = '';
+  steps[3].querySelector('p').textContent = 'Esperando...';
+  document.getElementById('eventsFeed').innerHTML = '<div class="event-item"><span class="e-time">' + getTime() + '</span><span class="e-icon">🔄</span><span class="e-text">Demo reiniciada</span></div>';
+  addEvent('📱', 'Cliente abrió la app');
+}
+
+function addEvent(icon, text) {
+  const feed = document.getElementById('eventsFeed');
+  const item = document.createElement('div');
+  item.className = 'event-item';
+  item.innerHTML = '<span class="e-time">' + getTime() + '</span><span class="e-icon">' + icon + '</span><span class="e-text">' + text + '</span>';
+  feed.insertBefore(item, feed.firstChild);
+  if (feed.children.length > 20) feed.removeChild(feed.lastChild);
+}
+
+function getTime() {
+  return new Date().toLocaleTimeString('es-MX', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
+
+function setDemoMode(btn) {
+  document.querySelectorAll('.demo-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+renderProducts();
+</script>
+</body>
+</html>
